@@ -1,23 +1,23 @@
-def find_path (source_point, destination_point, mesh):
+# def find_path (source_point, destination_point, mesh):
 
-    """
-    Searches for a path from source_point to destination_point through the mesh
+#     """
+#     Searches for a path from source_point to destination_point through the mesh
 
-    Args:
-        source_point: starting point of the pathfinder
-        destination_point: the ultimate goal the pathfinder must reach
-        mesh: pathway constraints the path adheres to
+#     Args:
+#         source_point: starting point of the pathfinder
+#         destination_point: the ultimate goal the pathfinder must reach
+#         mesh: pathway constraints the path adheres to
 
-    Returns:
+#     Returns:
 
-        A path (list of points) from source_point to destination_point if exists
-        A list of boxes explored by the algorithm
-    """
+#         A path (list of points) from source_point to destination_point if exists
+#         A list of boxes explored by the algorithm
+#     """
 
-    path = []
-    boxes = {}
+#     path = []
+#     boxes = {}
 
-    return path, boxes.keys()
+#     return path, boxes.keys()
 
 
 
@@ -86,4 +86,126 @@ def find_path (source_point, destination_point, mesh):
 
 #     # If no path is found
 #     return None, reached_boxes.keys()
+#     print("no path found")
+     
+
+
+
+
+
+
+
+
+
+
+
+    # paths = {source_point: []}          # maps cells to previous cells on path
+    # pathcosts = {source_point: 0}       # maps cells to their pathcosts (found so far)
+    # queue = []
+    # heappush(queue, (0, source_point))  # maintain a priority queue of cells
+    
+    # while queue:
+    #     priority, cell = heappop(queue)
+    #     if cell == destination:
+    #         return path_to_cell(cell, paths)
+        
+    #     # investigate children
+    #     for (child, step_cost) in adj(graph, cell):
+    #         # calculate cost along this path to child
+    #         cost_to_child = priority + transition_cost(graph, cell, child)
+    #         if child not in pathcosts or cost_to_child < pathcosts[child]:
+    #             pathcosts[child] = cost_to_child            # update the cost
+    #             paths[child] = cell                         # set the backpointer
+    #             heappush(queue, (cost_to_child, child))     # put the child on the priority queue
+            
+    # return False
+
+
+
+
+
+
+
+
+
+# # # me trying to implement forward search to bidirectional
+# from math import sqrt
+# from heapq import heappop, heappush
+
+# def find_path(source_point, destination_point, mesh):
+#     path = []
+#     boxes = {}
+
+#     forward_paths = {source_point: []}
+#     forward_pathcosts = {source_point: 0}
+#     backward_paths = {destination_point: []}
+#     backward_pathcosts = {destination_point: 0}
+
+#     queue = []
+#     heappush(queue, (0 + heuristic(source_point, destination_point), source_point, 'forward'))
+#     heappush(queue, (0 + heuristic(destination_point, source_point), destination_point, 'backward'))
+
+#     intersection_point = None
+
+#     while queue:
+#         priority, cell, goal = heappop(queue)
+
+#         if goal == 'forward':
+#             current_paths = forward_paths
+#             current_pathcosts = forward_pathcosts
+#             other_paths = backward_paths
+#             other_pathcosts = backward_pathcosts
+#         else:
+#             current_paths = backward_paths
+#             current_pathcosts = backward_pathcosts
+#             other_paths = forward_paths
+#             other_pathcosts = forward_pathcosts
+
+#         if cell in other_paths:
+#             intersection_point = cell
+#             break
+
+#         for (child, step_cost) in navigation_edges(mesh, cell):
+#             cost_to_child = current_pathcosts[cell] + step_cost
+#             if child not in current_pathcosts or cost_to_child < current_pathcosts[child]:
+#                 current_pathcosts[child] = cost_to_child
+#                 current_paths[child] = cell
+#                 heappush(queue, (cost_to_child + heuristic(child, destination_point), child, goal))
+
+#     if intersection_point:
+#         # Build the path segments from both directions
+#         forward_segment = path_to_cell(intersection_point, forward_paths)
+#         backward_segment = path_to_cell(intersection_point, backward_paths)[::-1]  # Reverse the backward path
+
+#         # Combine the two segments
+#         path = forward_segment + backward_segment[1:]  # Exclude the intersection point
+#         explored_boxes = set(forward_paths.keys()).union(backward_paths.keys())
+#         return path, explored_boxes
+
+#     return []
+
+# def path_to_cell(cell, paths):
+#     if cell == []:
+#         return []
+#     return path_to_cell(paths[cell], paths) + [cell]
+
+# def heuristic(cell, destination):
+#     # Euclidean distance heuristic
+#     return sqrt((destination[0] - cell[0]) ** 2 + (destination[1] - cell[1]) ** 2)
+
+# def navigation_edges(mesh, cell):
+#     res = []
+#     for delta in [(x, y) for x in [-1, 0, 1] for y in [-1, 0, 1] if not (x == 0 and y == 0)]:
+#         new = (cell[0] + delta[0], cell[1] + delta[1])
+#         if new in mesh['spaces']:
+#             res.append((new, transition_cost(mesh, new, cell)))
+#     return res
+
+# def transition_cost(mesh, cell, cell2):
+#     distance = sqrt((cell2[0] - cell[0]) ** 2 + (cell2[1] - cell[1]) ** 2)
+#     average_cost = (mesh['spaces'][cell] + mesh['spaces'][cell2]) / 2
+#     return distance * average_cost
+
+
+
 
